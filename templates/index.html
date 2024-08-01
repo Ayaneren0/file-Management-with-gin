@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing Platform</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the File Sharing Platform</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/upload">Upload File</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Uploaded Files</h2>
+        <div class="file-gallery">
+            {{range .Files}}
+                <div class="file-item">
+                    <a href="/files/{{.ID}}">
+                        <img src="/static/thumbnails/{{.Thumbnail}}" alt="{{.Name}}">
+                    </a>
+                    <p>{{.Name}}</p>
+                </div>
+            {{end}}
+        </div>
+    </main>
+</body>
+</html>
