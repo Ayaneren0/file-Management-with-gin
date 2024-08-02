@@ -44,7 +44,7 @@ project_root/ <br>
 
 1. Clone the repository:
     ```sh
-    git clone <repository_url>
+    git clone https://github.com/Ayaneren0/file-Management-with-gin.git
     cd project_root
     ```
 
