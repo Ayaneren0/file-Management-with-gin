@@ -21,11 +21,27 @@ func main() {
 	r.LoadHTMLGlob("templates/*.html")
 
 	//route to handle
-	r.GET("/", homeHandler)              //home page
-	r.GET("/upload", uploadHandler)      //upload page
-	r.GET("/:id", fileHandler)           //individual file display
-	r.POST("/upload", PostUploadHandler) //file uploads
+	r.GET("/", homeHandler)               //home page
+	r.GET("/upload", uploadHandler)       //upload page
+	r.GET("/:id", fileHandler)            //individual file display
+	r.POST("/upload", uploadFilesHandler) //file uploads
 
 	// Start the server on port 8080.
 	r.Run(":8080")
+}
+
+func homeHandler(c *gin.Context) {
+
+}
+
+func uploadHandler(c *gin.Context) {
+
+}
+
+func fileHandler(c *gin.Context) {
+
+}
+
+func uploadFilesHandler(c *gin.Context) {
+
 }
