@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -67,5 +69,40 @@ func fileHandler(c *gin.Context) {
 }
 
 func uploadFilesHandler(c *gin.Context) {
+	c.Request.ParseMultipartForm(10 << 20) //10MB max memory
 
+	//Retrive file from form.
+	file, header, err := c.Request.FormFile("file")
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		return
+	}
+	defer file.Close()
+
+	//Create the file path for saving the uploaded file
+	filePath := filepath.Join("static", "uploads", header.Filename)
+	dst, err := os.Create(filePath)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "error saving the file")
+		return
+	}
+	defer dst.Close()
+
+	// Write the uploaded file to the destination.
+	if _, err := dst.ReadFrom(file); err != nil {
+		c.String(http.StatusInternalServerError, "Error writing the file")
+		return
+	}
+
+	// Create a new File struct and add it to the files slice.
+	newFile := File{
+		ID:        header.Filename,
+		Name:      header.Filename,
+		Path:      filePath,
+		Thumbnail: header.Filename, // Simplified; generate a real thumbnail in practice
+	}
+	files = append(files, newFile)
+
+	// Redirect to the home page after successful upload.
+	c.Redirect(http.StatusSeeOther, "/")
 }
